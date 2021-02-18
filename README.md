@@ -5,6 +5,11 @@ Install python 3, ffmpeg and imagemagick before running this.
 
 try running ppmSignature.py yourself first, there might be an error that you're missing a dependency, you can install that using pip or npm i think
 
+## Todo
+* Remove external depencencies (internalize ppmSignature.py and dsiflipencode logic)
+* gui maybe
+* idk
+
 # Folder Structure
 in order for this to not kill itself here's what you need to do
 
