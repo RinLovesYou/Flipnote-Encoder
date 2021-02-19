@@ -30,6 +30,8 @@ This program will do the following
 * Unlock that ppm, in case you want to upload it to freenote/edit it in flipnote
 * sign the ppm so it can be used on the original Flipnote Studio
 
+it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back with most online players like [rakujira](https://flipnote.rakujira.jp)
+
 ![screenshot](https://media.discordapp.net/attachments/738116823035150356/812439551930007582/unknown.png)
 
 # FAQ
