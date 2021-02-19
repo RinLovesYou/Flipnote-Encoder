@@ -5,8 +5,10 @@ Install python 3, ffmpeg and imagemagick before running this.
 
 try running ppmSignature.py yourself first, there might be an error that you're missing a dependency, you can install that using pip or npm i think
 
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7) [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/) 
+
 ## Todo
-* Remove external depencencies (internalize ppmSignature.py and dsiflipencode logic)
+* Remove external depencencies (internalize ppmSignature.py(✓) and dsiflipencode(x) logic)
 * gui maybe
 * idk
 
@@ -20,7 +22,6 @@ Fill the folder with the following files:
 * folder called `frames` (place the video called `input.mp4` here)
 * the latest release of [dsiflipencode](https://github.com/khang06/dsiflipencode), including the exe and dependency DLLs
 * The Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem`
-* The `ppmSignature.py` script, that handles signing (good luck getting that one too lol)
 * and the latest EXE found in [releases](https://github.com/RinLovesYou/Flipnote-Signer/releases) 
 
 As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe`
@@ -34,6 +35,8 @@ This program will do the following
 * sign the ppm so it can be used on the original Flipnote Studio
 
 # This is made for a very small number of people in possession of the flipnote key and the signing script
-do not ask for the key or the script
+do not ask for the key
+
 you won't get it
+
 if you don't have it this is not for you
