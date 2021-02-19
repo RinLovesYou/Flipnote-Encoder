@@ -5,7 +5,7 @@ Install python 3, ffmpeg and imagemagick before running this.
 
 try running ppmSignature.py yourself first, there might be an error that you're missing a dependency, you can install that using pip or npm i think
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7) [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/) 
+[![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/) 
 
 ## Todo
 * Remove external depencencies (internalize ppmSignature.py(✓) and dsiflipencode(x) logic)
@@ -40,3 +40,5 @@ do not ask for the key
 you won't get it
 
 if you don't have it this is not for you
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
