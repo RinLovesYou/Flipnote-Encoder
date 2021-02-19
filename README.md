@@ -1,5 +1,5 @@
 # Flipnote-Signer
-Shitty C# console application that runs a bunch of console commands to sign fipnotes
+Shitty C# console application that encodes and signs flipnotes
 
 Most of the work was done by khang06 and his [dsiflipencoder](https://github.com/khang06/dsiflipencode), I only worked on automating the creation of flipnotes, and made the signing logic.
 
