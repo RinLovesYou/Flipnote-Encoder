@@ -1,7 +1,7 @@
 # Flipnote-Signer
 Shitty C# console application that runs a bunch of console commands to sign fipnotes
 
-Install python 3, ffmpeg and imagemagick before running this.
+Install ffmpeg and imagemagick before running this.
 
 try running ppmSignature.py yourself first, there might be an error that you're missing a dependency, you can install that using pip or npm i think
 
@@ -26,6 +26,8 @@ Fill the folder with the following files:
 
 As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe`
 This program will do the following
+
+DELETE OLD `frames` CONTENT BEFORE DOING A NEW ONE
 
 * If no frames exist, it will split the video into frames, and dither them
 * If no audio exists, it will create `audio.wav`
