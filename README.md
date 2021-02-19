@@ -32,11 +32,11 @@ DELETE OLD `frames` CONTENT BEFORE DOING A NEW ONE
 * Unlock that ppm, in case you want to upload it to freenote/edit it in flipnote
 * sign the ppm so it can be used on the original Flipnote Studio
 
-# This is made for a very small number of people in possession of the flipnote key and the signing script
+# This is made for a very small number of people in possession of the flipnote key
 do not ask for the key
 
 you won't get it
 
-if you don't have it this is not for you
+if you don't have it, you can still use this to generate flipnotes, it just won't play back on a real dsi
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
