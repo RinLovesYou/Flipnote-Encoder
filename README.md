@@ -30,11 +30,12 @@ This program will do the following
 * Unlock that ppm, in case you want to upload it to freenote/edit it in flipnote
 * sign the ppm so it can be used on the original Flipnote Studio
 
-# This is made for a very small number of people in possession of the flipnote key
-do not ask for the key
+# FAQ
+* Q: why won't it play on my dsi? A: You don't have the flipnote private key
+* Q: Can you give it to me? A: no good luck googling for it
+* Q: Can you add x? A: Yes! Maybe! suggest in [issues](https://github.com/RinLovesYou/Flipnote-Signer/issues)
 
-you won't get it
-
-if you don't have it, you can still use this to generate flipnotes, it just won't play back on a real dsi
+discord: Rin#6969
+twitter: @does_rin
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
