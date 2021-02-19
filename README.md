@@ -1,29 +1,27 @@
 # Flipnote-Signer
 Shitty C# console application that runs a bunch of console commands to sign fipnotes
 
+Most of the work was done by khang06 and his [dsiflipencoder](https://github.com/khang06/dsiflipencode), I only worked on automating the creation of flipnotes, and make signing them a part of the process for anyone with a private key
+
 Install ffmpeg and imagemagick before running this.
 
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/) 
 
 ## Todo
-* Remove external depencencies (internalize ppmSignature.py(✓) and dsiflipencode(x) logic)
 * gui maybe
 * idk
 
-# Folder Structure
+# How to use
 in order for this to not kill itself here's what you need to do
 
-Add the following files to the root folder:
-
+* download and unzip the latest [release](https://github.com/RinLovesYou/Flipnote-Signer/releases) 
 * place the video called `input.mp4` in the `frames` folder)
-* the latest release of [dsiflipencode](https://github.com/khang06/dsiflipencode), including the exe and dependency DLLs
-* The Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem`
-* and the latest [release](https://github.com/RinLovesYou/Flipnote-Signer/releases) 
+* place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
 
 As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe`
 This program will do the following
 
-DELETE OLD `frames` CONTENT BEFORE DOING A NEW ONE
+### DELETE OLD `frames` CONTENT BEFORE DOING A NEW ONE
 
 * If no frames exist, it will split the video into frames, and dither them
 * If no audio exists, it will create `audio.wav`
