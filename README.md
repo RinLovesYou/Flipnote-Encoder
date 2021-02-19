@@ -13,14 +13,12 @@ Install ffmpeg and imagemagick before running this.
 # Folder Structure
 in order for this to not kill itself here's what you need to do
 
-Create a folder called whatever you want
+Add the following files to the root folder:
 
-Fill the folder with the following files:
-
-* folder called `frames` (place the video called `input.mp4` here)
+* place the video called `input.mp4` in the `frames` folder)
 * the latest release of [dsiflipencode](https://github.com/khang06/dsiflipencode), including the exe and dependency DLLs
 * The Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem`
-* and the latest EXE found in [releases](https://github.com/RinLovesYou/Flipnote-Signer/releases) 
+* and the latest [release](https://github.com/RinLovesYou/Flipnote-Signer/releases) 
 
 As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe`
 This program will do the following
