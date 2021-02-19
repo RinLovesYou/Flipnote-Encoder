@@ -3,8 +3,6 @@ Shitty C# console application that runs a bunch of console commands to sign fipn
 
 Install ffmpeg and imagemagick before running this.
 
-try running ppmSignature.py yourself first, there might be an error that you're missing a dependency, you can install that using pip or npm i think
-
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/) 
 
 ## Todo
