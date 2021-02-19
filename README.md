@@ -16,7 +16,7 @@ in order for this to not kill itself here's what you need to do
 
 * download and unzip the latest [release](https://github.com/RinLovesYou/Flipnote-Signer/releases) 
 * place the video called `input.mp4` in the `frames` folder)
-* place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
+* (OPTIONAL) place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
 
 As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe`
 This program will do the following
