@@ -5,7 +5,7 @@ Most of the work was done by khang06 and his [dsiflipencoder](https://github.com
 
 Install ffmpeg and imagemagick before running this.
 
-[![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/Naereen/) 
+[![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://github.com/RinLovesYou) 
 
 ## Todo
 * gui maybe
