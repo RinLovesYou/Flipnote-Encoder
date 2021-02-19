@@ -36,6 +36,7 @@ This program will do the following
 * Q: Can you add x? A: Yes! Maybe! suggest in [issues](https://github.com/RinLovesYou/Flipnote-Signer/issues)
 
 discord: Rin#6969
+
 twitter: @does_rin
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
