@@ -30,6 +30,8 @@ This program will do the following
 * Unlock that ppm, in case you want to upload it to freenote/edit it in flipnote
 * sign the ppm so it can be used on the original Flipnote Studio
 
+![screenshot](https://media.discordapp.net/attachments/738116823035150356/812439551930007582/unknown.png)
+
 # FAQ
 * Q: why won't it play on my dsi? A: You don't have the flipnote private key
 * Q: Can you give it to me? A: no good luck googling for it
