@@ -8,6 +8,7 @@ Install ffmpeg and imagemagick before running this.
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://github.com/RinLovesYou) 
 
 ## Todo
+* create my own flipnote encoder and get rid of ffmpeg/imagemagick reliance, this is to remove the need for running console commands
 * gui maybe
 * idk
 
