@@ -37,6 +37,7 @@ it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back wi
 # FAQ
 * Q: why won't it play on my dsi? A: You don't have the flipnote private key
 * Q: Can you give it to me? A: no good luck googling for it
+* Q: I can't upload it to freenote! Why? A: It doesn't magically know your user information. Edit and save it in Flipnote Studio to upload it.
 * Q: Can you add x? A: Yes! Maybe! suggest in [issues](https://github.com/RinLovesYou/Flipnote-Signer/issues)
 
 discord: Rin#6969
