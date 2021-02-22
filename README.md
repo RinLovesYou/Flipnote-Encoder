@@ -1,35 +1,21 @@
 # Flipnote-Encoder
-Shitty C# console application that creates flipnotes from mp4 and signs them
 
-Most of the work was done by khang06 and his [dsiflipencoder](https://github.com/khang06/dsiflipencode), I only worked on automating the creation of flipnotes, and made the signing logic.
+A Flipnote encoder written in C#
 
-Install ffmpeg and imagemagick before running this.
+uses binaries from [ffmpeg](https://ffmpeg.org), [imagemagick](https://imagemagick.org/index.php) and [sox](http://sox.sourceforge.net) for image/sound manipulation
 
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://github.com/RinLovesYou) 
 
-## Todo
-* create my own flipnote encoder and get rid of ffmpeg/imagemagick reliance, this is to remove the need for running console commands
-* gui maybe
-* idk
-
 # How to use
-in order for this to not kill itself here's what you need to do
-
-* download and unzip the latest [release](https://github.com/RinLovesYou/Flipnote-Signer/releases) 
-* place the video called `input.mp4` in the `frames` folder)
-* (OPTIONAL) place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
-
-As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe`
-This program will do the following
-
 ### DELETE OLD `frames` CONTENT BEFORE DOING A NEW ONE
+* download and unzip the latest [release](https://github.com/RinLovesYou/Flipnote-Encoder/releases) 
+* place the video called `input.mp4` in the `frames` folder)
+* (Optional) Replace the flipnote in DummyFlipnote with one of your own! It'll embed your user information in the encoded Flipnote
+* (Optional) place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
 
-* If no frames exist, it will split the video into frames, and dither them
-* If no audio exists, it will create `audio.wav`
-* Create a random thumbnail.bin, giving funny random thumbnails
-* Create the generated Flipnote as a .pmm file
-* Unlock that ppm, in case you want to upload it to freenote/edit it in flipnote
-* sign the ppm so it can be used on the original Flipnote Studio
+As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe` it should work
+
+Expect bugs and report them in the [issues](https://github.com/RinLovesYou/Flipnote-Encoder/issues) section please
 
 it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back with most online players like [rakujira](https://flipnote.rakujira.jp)
 
@@ -38,11 +24,18 @@ it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back wi
 # FAQ
 * Q: why won't it play on my dsi? A: You don't have the flipnote private key
 * Q: Can you give it to me? A: no good luck googling for it
-* Q: I can't upload it to freenote! Why? A: It doesn't magically know your user information. Edit and save it in Flipnote Studio to upload it.
 * Q: Can you add x? A: Yes! Maybe! suggest in [issues](https://github.com/RinLovesYou/Flipnote-Signer/issues)
 
-discord: Rin#6969
+discord: `Rin#6969`
 
-twitter: @does_rin
+twitter: `@does_rin`
+
+## Special Thanks
+* [khang06](https://github.com/khang06) For his awesome encoder and his help in understanding audio
+* [miso-xyz](https://github.com/miso-xyz) For his FlipnoteDesktop program, that provided the grunt work in writing the Flipnote
+* guys from [DSiBrew](https://dsibrew.org/wiki/Main_Page) and [Flipnote Collective](https://github.com/Flipnote-Collective) for their awesome documentation on .PPM file format.
+
+# Note
+Flipnote Studio is a trademark of Nintendo. This project is not linked to them in any way. It is intended for educational purposes only.
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
