@@ -13,7 +13,7 @@ uses binaries from [ffmpeg](https://ffmpeg.org), [imagemagick](https://imagemagi
 * (Optional) Replace the flipnote in DummyFlipnote with one of your own! It'll embed your user information in the encoded Flipnote
 * (Optional) place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
 
-As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe` it should work
+As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe` it should work (Playback on a real dsi with 1mb+ flipnotes is not guaranteed)
 
 Expect bugs and report them in the [issues](https://github.com/RinLovesYou/Flipnote-Encoder/issues) section please
 
