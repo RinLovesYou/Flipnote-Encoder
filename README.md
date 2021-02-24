@@ -33,7 +33,7 @@ twitter: `@does_rin`
 (side note: current source code does not reflect latest release as it was a hotfix)
 
 ## Special Thanks
-* [khang06](https://github.com/khang06) For his awesome encoder being the inspiration and his help in understanding audio
+* [khang06](https://github.com/khang06) For his awesome encoder, being the inspiration, and his help in understanding audio
 * [miso-xyz](https://github.com/miso-xyz) For his FlipnoteDesktop program, that provided the grunt work in writing the Flipnote
 * guys from [DSiBrew](https://dsibrew.org/wiki/Main_Page) and [Flipnote Collective](https://github.com/Flipnote-Collective) for their awesome documentation on .PPM file format.
 
