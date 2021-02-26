@@ -3,3 +3,5 @@
 ################################################################################
 
 /EncodeAndSign/bin/Debug
+/EncodeAndSign/obj/Debug
+/EncodeAndSign/packages
