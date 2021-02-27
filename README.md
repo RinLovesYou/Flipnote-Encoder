@@ -2,7 +2,9 @@
 
 A Flipnote encoder written in C#
 
-uses binaries from [ffmpeg](https://ffmpeg.org) and [imagemagick](https://imagemagick.org/index.php) video/image manipulation
+uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation
+
+please install [imagemagick](https://imagemagick.org/script/download.php) before running this
 
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://github.com/RinLovesYou) 
 
