@@ -528,7 +528,6 @@ namespace EncodeAndSign.Data
 
             var bruhh = BitmapImage2Bitmap(Thumbnail);
             var resized = new System.Drawing.Bitmap(bruhh, new System.Drawing.Size(bruhh.Width / 2, bruhh.Height / 2));
-            resized.Save("out/thumb.bmp");
             var res = new byte[1536];
             /// TO DO : change with the actual frame thumbnail
             for (int x = 0; x < 64; x++)
