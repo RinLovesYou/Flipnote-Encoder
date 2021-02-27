@@ -24,7 +24,7 @@ namespace EncodeAndSign.Data
         }
 
 
-        public bool[,] BitmapToBoolArray(Bitmap PiecesBitmap)
+        public static bool[,] BitmapToBoolArray(Bitmap PiecesBitmap)
         {
             bool[,] PiecesBoolArray = new bool[256, 192];
             for (int x = 0; x < 256; x++)

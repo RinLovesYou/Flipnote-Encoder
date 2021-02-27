@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -492,6 +493,7 @@ namespace EncodeAndSign.Data
                 }
             }
             Thumbnail.WritePixels(new Int32Rect(0, 0, 128, 96), thumbnailPixels, 128, 0);
+            
         }
 
         byte GetCompositeThumbnailPixel(int x, int y)
@@ -518,20 +520,61 @@ namespace EncodeAndSign.Data
 
         public byte[] CreateThumbnailW64()
         {
+            CreateThumbnail();
+
+            var width = Thumbnail.PixelWidth;
+            var height = Thumbnail.PixelHeight;
+            var stride = width * ((Thumbnail.Format.BitsPerPixel + 7) / 8);
+
+            var bruhh = BitmapImage2Bitmap(Thumbnail);
+            var resized = new System.Drawing.Bitmap(bruhh, new System.Drawing.Size(bruhh.Width / 2, bruhh.Height / 2));
+            resized.Save("out/thumb.bmp");
             var res = new byte[1536];
             /// TO DO : change with the actual frame thumbnail
             for (int x = 0; x < 64; x++)
+            {
                 for (int y = 0; y < 48; y++)
-                    w64SetPixel(res, x, y, (8 * (y / 8) + x / 8) % 16);
+                {
+                    var b = resized.GetPixel(x, y).GetBrightness();
+                    if (b < 0.1)
+                    {
+                        w64SetPixel(res, x, y, TColor.Black);
+                    } else if(b > 0.8)
+                    {
+                        w64SetPixel(res, x, y, TColor.White);
+                    } else
+                    {
+                        w64SetPixel(res, x, y, TColor.Gray);
+                    }
+                }
+            }
+                
+                    
             return res;
         }
 
-        private void w64SetPixel(byte[] raw, int x, int y, int val)
+        private void w64SetPixel(byte[] raw, int x, int y, TColor color)
         {
+            var val = (int)color;
             int offset = (8 * (y / 8) + (x / 8)) * 32 + 4 * (y % 8) + (x % 8) / 2;
             int nibble = x & 1;
             raw[offset] &= (byte)~(0x0F << (4 * nibble));
             raw[offset] |= (byte)(val << (4 * nibble));
+        }
+
+        private System.Drawing.Bitmap BitmapImage2Bitmap(WriteableBitmap bitmapImage)
+        {
+            // BitmapImage bitmapImage = new BitmapImage(new Uri("../Images/test.png", UriKind.Relative));
+
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+                enc.Save(outStream);
+                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+
+                return new System.Drawing.Bitmap(bitmap);
+            }
         }
 
         public Flipnote._FrameData ToFrameData()

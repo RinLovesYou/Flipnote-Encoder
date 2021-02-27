@@ -28,7 +28,6 @@ namespace EncodeAndSign.Encoder
                     DecodedFrame decodedFrame = new DecodedFrame();
                     decodedFrame.SetLayerPixels(1, frame);
                     decodedFrame.SetLayerPixels(2, new bool[256, 192]);
-                    decodedFrame.CreateThumbnail();
                     buffer.Add(decodedFrame);
                 }
                 else
