@@ -30,8 +30,6 @@ discord: `Rin#6969`
 
 twitter: `@does_rin`
 
-(side note: current source code does not reflect latest release as it was a hotfix)
-
 ## Special Thanks
 * [khang06](https://github.com/khang06) For his awesome encoder, being the inspiration, and his help in understanding audio
 * [miso-xyz](https://github.com/miso-xyz) For his FlipnoteDesktop program, which helped a lot in understanding the structure of a Flipnote
