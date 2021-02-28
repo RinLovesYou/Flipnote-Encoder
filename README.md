@@ -19,12 +19,13 @@ Located inside the Root folder is a config.json. Should it not exist, a new one 
 Here you can see all the config Items with a description of how to use them:
 ```Java
 {
-  //One of 7 possible Dithering algorithms. Most of these don't require imagemagick to be installed, except for the last one.
-  //0 = None, 1 = Floyd Steinberg, 2 = Atkinson, 3 = Burkes, 4 = Jarvis, 5 = Sierra, 6 = Imagemagick Mogrify Bilevel (This one requires Imagemagick)
+  // One of 7 possible Dithering algorithms. Most of these don't require imagemagick to be installed, except for the last one.
+  // 0 = None, 1 = Floyd Steinberg, 2 = Atkinson, 3 = Burkes, 4 = Jarvis, 5 = Sierra, 6 = Imagemagick Mogrify Bilevel (This one requires Imagemagick)
+  // Different Algorithms will look better on different videos.
   "DitheringMode": 1,
-  //Wether or not to turn the Video into 30FPS to fix sound sync issues. Is on by default to avoid these issues. Saves a bit on filesize if turned to false
+  // Wether or not to turn the Video into 30FPS to fix sound sync issues. Is on by default to avoid these issues. Saves a bit on filesize if turned to false
   "Accurate": true,
-  //Not working, once implemented will split the video into parts that are all playable on a dsi/3ds
+  // Not working, once implemented will split the video into parts that are all playable on a dsi/3ds
   "Split": false
 }
 ```
