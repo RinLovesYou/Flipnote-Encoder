@@ -7,7 +7,7 @@ uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 please install [imagemagick](https://imagemagick.org/script/download.php) before running this. (the first exe above the others in the Windows section)
 
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://github.com/RinLovesYou) 
-[![Support Server](https://img.shields.io/discord/815244291366453259.svg?label=Discord&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/MBM9ZeAjna)
+[![Support Server](https://img.shields.io/discord/815244291366453259.svg?label=Support_Server&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/MBM9ZeAjna)
 
 # How to use
 ### DELETE OLD `frames` CONTENT BEFORE DOING A NEW ONE
