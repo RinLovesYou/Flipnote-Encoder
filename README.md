@@ -4,19 +4,30 @@ A Flipnote encoder written in C#
 
 uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 
-please install [imagemagick](https://imagemagick.org/script/download.php) before running this. (the first exe above the others in the Windows section)
-
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://github.com/RinLovesYou) 
+
 [![Support Server](https://img.shields.io/discord/815244291366453259.svg?label=Support_Server&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/MBM9ZeAjna)
 
-# How to use
-### DELETE OLD `frames` CONTENT BEFORE DOING A NEW ONE
+# Quickstart
 * download and unzip the latest [release](https://github.com/RinLovesYou/Flipnote-Encoder/releases) 
-* place the video called `input.mp4` in the `frames` folder)
-* (Optional) Replace the flipnote in DummyFlipnote with one of your own! It'll embed your user information in the encoded Flipnote
+* place the video called `input.mp4` in the `frames` folder, make sure no other files exist there
+* Replace the Dummy Flipnote with one of your own. This will embed your User Information
 * (Optional) place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
 
-As long as you have your `input.mp4` located in `frames`, you can just double click `EncodeAndSign.exe` and it should work. (Playback on a real dsi with 1mb+ flipnotes is not guaranteed)
+# config.json
+Located inside the Root folder is a config.json. Should it not exist, a new one will be created by the program.
+Here you can see all the config Items with a description of how to use them:
+```Java
+{
+  //One of 7 possible Dithering algorithms. Most of these don't require imagemagick to be installed, except for the last one.
+  //0 = None, 1 = Floyd Steinberg, 2 = Atkinson, 3 = Burkes, 4 = Jarvis, 5 = Sierra, 6 = Imagemagick Mogrify Bilevel (This one requires Imagemagick)
+  "DitheringMode": 1,
+  //Wether or not to turn the Video into 30FPS to fix sound sync issues. Is on by default to avoid these issues. Saves a bit on filesize if turned to false
+  "Accurate": true,
+  //Not working, once implemented will split the video into parts that are all playable on a dsi/3ds
+  "Split": false
+}
+```
 
 Expect bugs and report them in the [issues](https://github.com/RinLovesYou/Flipnote-Encoder/issues) section please.
 
