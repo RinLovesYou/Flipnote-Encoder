@@ -7,6 +7,7 @@ uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 please install [imagemagick](https://imagemagick.org/script/download.php) before running this. (the first exe above the others in the Windows section)
 
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://github.com/RinLovesYou) 
+[![Support Server](https://img.shields.io/discord/815244291366453259.svg?label=Discord&logo=Discord&colorB=7289da&style=for-the-badge)](https://discord.gg/MBM9ZeAjna)
 
 # How to use
 ### DELETE OLD `frames` CONTENT BEFORE DOING A NEW ONE
@@ -28,9 +29,9 @@ it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back wi
 * Q: Can you give it to me? A: no good luck googling for it
 * Q: Can you add x? A: Yes! Maybe! suggest in [issues](https://github.com/RinLovesYou/Flipnote-Signer/issues)
 
-discord: `Rin#6969`
+[discord:](https://discord.gg/MBM9ZeAjna) `Rin#6969`
 
-twitter: `@does_rin`
+[twitter:](https://twitter.com/does_rin) `@does_rin`
 
 ## Special Thanks
 * [khang06](https://github.com/khang06) For his awesome encoder, being the inspiration, and his help in understanding audio.
