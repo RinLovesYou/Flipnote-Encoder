@@ -2,9 +2,9 @@
 
 A Flipnote encoder written in C#
 
-uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation
+uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 
-please install [imagemagick](https://imagemagick.org/script/download.php) before running this (the first exe above the others in the Windows section)
+please install [imagemagick](https://imagemagick.org/script/download.php) before running this. (the first exe above the others in the Windows section)
 
 [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://github.com/RinLovesYou) 
 
@@ -15,11 +15,11 @@ please install [imagemagick](https://imagemagick.org/script/download.php) before
 * (Optional) Replace the flipnote in DummyFlipnote with one of your own! It'll embed your user information in the encoded Flipnote
 * (Optional) place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
 
-As long as you have your `input.mp4` located in `frames` you can just double click `EncodeAndSign.exe` it should work (Playback on a real dsi with 1mb+ flipnotes is not guaranteed)
+As long as you have your `input.mp4` located in `frames`, you can just double click `EncodeAndSign.exe` and it should work. (Playback on a real dsi with 1mb+ flipnotes is not guaranteed)
 
-Expect bugs and report them in the [issues](https://github.com/RinLovesYou/Flipnote-Encoder/issues) section please
+Expect bugs and report them in the [issues](https://github.com/RinLovesYou/Flipnote-Encoder/issues) section please.
 
-it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back with most online players like [rakujira](https://flipnote.rakujira.jp)
+it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back with most online players like [rakujira](https://flipnote.rakujira.jp) though.
 
 ![screenshot](https://media.discordapp.net/attachments/738116823035150356/812439551930007582/unknown.png)
 
@@ -33,8 +33,8 @@ discord: `Rin#6969`
 twitter: `@does_rin`
 
 ## Special Thanks
-* [khang06](https://github.com/khang06) For his awesome encoder, being the inspiration, and his help in understanding audio
-* [miso-xyz](https://github.com/miso-xyz) For his FlipnoteDesktop program, which helped a lot in understanding the structure of a Flipnote
+* [khang06](https://github.com/khang06) For his awesome encoder, being the inspiration, and his help in understanding audio.
+* [miso-xyz](https://github.com/miso-xyz) For his FlipnoteDesktop program, which helped a lot in understanding the structure of a Flipnote.
 * guys from [DSiBrew](https://dsibrew.org/wiki/Main_Page) and [Flipnote Collective](https://github.com/Flipnote-Collective) for their awesome documentation on .PPM file format.
 
 # Note
