@@ -24,7 +24,7 @@ Here you can see all the config Items with a description of how to use them:
   // 12 = SierraLite, 13 = Stucki, 14 = Ordered3x3, 15 = imagemagick (needs to be installed)
   // Different Algorithms will look better on different videos.
   "DitheringMode": 1,
-  // Wether or not to turn the Video into 30FPS to fix sound sync issues. Is on by default to avoid these issues. Saves a bit on filesize if turned to false
+  // Wether or not to turn the Video into 30FPS to fix sound sync issues. Is on by default to avoid these issues. Can save a bit on filesize for <30FPS videos.
   "Accurate": true,
   // Not working, once implemented will split the video into parts that are all playable on a dsi/3ds
   "Split": false
