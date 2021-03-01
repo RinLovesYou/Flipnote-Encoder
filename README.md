@@ -19,7 +19,7 @@ Located inside the Root folder is a config.json. Should it not exist, a new one 
 Here you can see all the config Items with a description of how to use them:
 ```Java
 {
-  // One of 16 possible Dithering algorithms. Most of these don't require imagemagick to be installed, except for the last one.
+  // One of 14 possible Dithering algorithms. Most of these don't require imagemagick to be installed, except for the last one.
   // 0 = None, 1-3 = Bayer8x8/4x4/1x1, 4 = Floyd Steinberg, 5 = Atkinson, 6 = Burkes, 7 = Jarvis, 8 = StevensonArce, 9 = Sierra2, 10 = Sierra3 
   // 11 = SierraLite, 12 = Stucki, 13 = Ordered3x3, 14 = imagemagick (needs to be installed)
   // Different Algorithms will look better on different videos.
