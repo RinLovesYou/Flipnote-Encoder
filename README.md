@@ -26,6 +26,8 @@ Here you can see all the config Items with a description of how to use them:
   "DitheringMode": 1,
   // Wether or not to turn the Video into 30FPS to fix sound sync issues. Is on by default to avoid these issues. Can save a bit on filesize for <30FPS videos.
   "Accurate": true,
+  // Adds the option for contrast bump, helps with visual clarity in some cases
+  "Contrast": 0,
   // Not working, once implemented will split the video into parts that are all playable on a dsi/3ds
   "Split": false
 }
