@@ -23,6 +23,23 @@ namespace EncodeAndSign.Data
             BoolFrames = bools;
         }
 
+        public FrameDecoder(List<Bitmap> bitmaps)
+        {
+            //frames to bool arrays
+            List<bool[,]> bools = new List<bool[,]>();
+            int i = 0;
+            bitmaps.ToList().ForEach(frame =>
+            {
+                var color = frame;
+                var bw = color.Clone(new Rectangle(0, 0, color.Width, color.Height), PixelFormat.Format1bppIndexed);
+                bools.Add(BitmapToBoolArray(bw));
+
+            });
+            BoolFrames = bools;
+        }
+
+
+
 
         public static bool[,] BitmapToBoolArray(Bitmap PiecesBitmap)
         {

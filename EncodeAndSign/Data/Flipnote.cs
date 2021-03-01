@@ -290,7 +290,7 @@ namespace EncodeAndSign.Data
             {
                 AnimationDataSize = (uint)(AnimationDataSize + 8 + Frames.Count() * 4);
                 var AllignSize = (uint)(4 - ((0x6A0 + AnimationDataSize + Frames.Count()) % 4));
-                if (AllignSize != 4 && AllignSize !=2)
+                if (AllignSize != 4)
                     AnimationDataSize += AllignSize;
                 w.Write(FileMagic);
                 w.Write(AnimationDataSize);
@@ -337,7 +337,7 @@ namespace EncodeAndSign.Data
                 for (int i = 0; i < Frames.Length; i++)
                     w.Write((byte)0);
 
-                if (AllignSize != 4 && AllignSize != 2)
+                if (AllignSize != 4)
                     w.Write(new byte[AllignSize]);
 
                 // make the next offset dividable by 4;

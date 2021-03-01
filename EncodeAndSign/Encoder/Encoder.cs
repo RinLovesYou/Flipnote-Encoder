@@ -1,5 +1,6 @@
 ﻿using EncodeAndSign.Data;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace EncodeAndSign.Encoder
 {
@@ -7,6 +8,17 @@ namespace EncodeAndSign.Encoder
     {
         public Flipnote ResultNote { get; set; }
         public Encoder(string[] frames, Flipnote dummy)
+        {
+
+            FrameDecoder FrameDecoder = new FrameDecoder(frames);
+
+            Flipnote encoded = Flipnote.New(dummy.Metadata.CurrentAuthorName, dummy.Metadata.CurrentAuthorId, ToDecodedFrame(FrameDecoder.BoolFrames), false);
+
+            //todo: use this for metadata display i guess
+            ResultNote = encoded;
+        }
+
+        public Encoder(List<Bitmap> frames, Flipnote dummy)
         {
 
             FrameDecoder FrameDecoder = new FrameDecoder(frames);

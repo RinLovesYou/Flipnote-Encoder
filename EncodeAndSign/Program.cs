@@ -1,7 +1,10 @@
 ﻿using EncodeAndSign.Data;
+using EncodeAndSign.Encoder;
+using Newtonsoft.Json;
 using ShellProgressBar;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -25,8 +28,44 @@ namespace EncodeAndSign
         private static object _syncLock = new object();
         private static AutoResetEvent _waitHandle = new AutoResetEvent(false);
 
+        private static Config config = null;
+
         static void Main(string[] args)
         {
+            if (!File.Exists("config.json"))
+            {
+                var newConfig = new Config();
+                newConfig.Accurate = true;
+                newConfig.DitheringMode = 1;
+                newConfig.Split = false;
+                config = newConfig;
+
+
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.NullValueHandling = NullValueHandling.Ignore;
+
+                using (StreamWriter sw = new StreamWriter("config.json"))
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, newConfig);
+                    // {"ExpiryDate":new Date(1230375600000),"Price":0}
+                }
+            }
+            else
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.NullValueHandling = NullValueHandling.Ignore;
+
+                using (StreamReader sw = new StreamReader("config.json"))
+                using (JsonReader writer = new JsonTextReader(sw))
+                {
+                    var read = serializer.Deserialize<Config>(writer);
+                    config = read;
+                    // {"ExpiryDate":new Date(1230375600000),"Price":0}
+                }
+            }
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             // start the message pumping thread
             Thread msgThread = new Thread(MessagePump);
@@ -35,8 +74,12 @@ namespace EncodeAndSign
             string command = string.Empty;
             do
             {
-                //do the flipnote stuff
-                doShit();
+
+                //do Encoding
+
+                CreateAndSignFlipnote();
+
+
                 SetQuitRequested();
             } while (!_quitRequested);
             // signal that we want to quit
@@ -74,7 +117,7 @@ namespace EncodeAndSign
             Console.WriteLine("exit");
         }
 
-        private static void doShit()
+        private static void CreateAndSignFlipnote()
         {
             //no input, stop
             if (!File.Exists("frames/input.mp4")) return;
@@ -98,149 +141,200 @@ namespace EncodeAndSign
                     CollapseWhenFinished = false,
                     ProgressCharacter = '─'
                 };
+                Bitmap[] bitmaps = null;
                 using (var pbar = new ProgressBar(totalTicks, "Flipnote Progress", options))
                 {
 
-
+                    //frame stuff
                     if (!File.Exists("frames/frame_0.png"))
                     {
 
                         //todo: Stop running console commands
-                        //this code sucks.
-
                         //Turn video into 30FPS, fixed sound sync issues (https://github.com/khang06/dsiflipencode/pull/5)
-                        Process framerate = new Process();
-                        ProcessStartInfo frameinfo = new ProcessStartInfo();
-
-                        frameinfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                        frameinfo.FileName = "cmd.exe";
-                        frameinfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\input.mp4 -filter:v fps=30 ..\..\frames\frame_%d.png";
-                        frameinfo.RedirectStandardOutput = false;
-
-                        framerate.StartInfo = frameinfo;
-                        framerate.Start();
-
-                        pbar.Tick();
-                        using (var child = pbar.Spawn(totalTicks, "Changing Framerate...", childOptions))
+                        if (config.Accurate)
                         {
-                            child.Tick(2);
-                            framerate.WaitForExit();
-                            framerate.Dispose();
+                            using (var child = pbar.Spawn(2, "Mode: Accurate, Splitting Frames...", childOptions))
+                            {
+                                #region Create30FPSframes
+                                Process framerate = new Process();
+                                ProcessStartInfo frameinfo = new ProcessStartInfo();
+                                frameinfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                                frameinfo.FileName = "cmd.exe";
+                                frameinfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\input.mp4 -filter:v fps=30 ..\..\frames\frame_%d.png";
+                                frameinfo.RedirectStandardOutput = false;
+                                framerate.StartInfo = frameinfo;
+                                framerate.Start();
+                                framerate.WaitForExit();
+                                framerate.Dispose();
+                                #endregion
+                                child.Tick(1, "Mode: Accurate, Resizing Frames...");
+                                #region Scale30FPSFrames
+                                Process framesplit = new Process();
+                                ProcessStartInfo startInfo = new ProcessStartInfo();
 
-
-                            
-                            Process framesplit = new Process();
-                            ProcessStartInfo startInfo = new ProcessStartInfo();
-
-                            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                            startInfo.FileName = "cmd.exe";
-                            startInfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\frame_%d.png -vf scale=256:192 ..\..\frames\frame_%d.png";
-                            startInfo.RedirectStandardOutput = false;
-                            framesplit.StartInfo = startInfo;
-                            framesplit.Start();
-                            child.Tick(5, "Splitting Frames...");
-                            framesplit.WaitForExit();
-                            framesplit.Dispose();
-                            child.Tick(10, "Frames Split!");
+                                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                                startInfo.FileName = "cmd.exe";
+                                startInfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\frame_%d.png -vf scale=256:192 ..\..\frames\frame_%d.png";
+                                startInfo.RedirectStandardOutput = false;
+                                framesplit.StartInfo = startInfo;
+                                framesplit.Start();
+                                framesplit.WaitForExit();
+                                framesplit.Dispose();
+                                #endregion
+                                child.Tick(2, "Mode: Accurate, Frames Split!");
+                            }
+                            pbar.Tick(1);
                         }
-
+                        else
+                        {
+                            using (var child = pbar.Spawn(2, "Mode: Fast", childOptions))
+                            {
+                                child.Tick(1, "Mode: Fast, Splitting Frames...");
+                                #region SplitFrames
+                                Process framerate = new Process();
+                                ProcessStartInfo frameinfo = new ProcessStartInfo();
+                                frameinfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                                frameinfo.FileName = "cmd.exe";
+                                frameinfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\input.mp4 -vf scale=256:192 ..\..\frames\frame_%d.png";
+                                frameinfo.RedirectStandardOutput = false;
+                                framerate.StartInfo = frameinfo;
+                                framerate.Start();
+                                framerate.WaitForExit();
+                                framerate.Dispose();
+                                #endregion
+                                child.Tick(2, "Mode: Fast, Frames Split!...");
+                            }
+                            pbar.Tick(1);
+                        }
 
                         File.Copy("frames/frame_1.png", "frames/frame_0.png");
 
-                        Process dither = new Process();
-                        ProcessStartInfo ditherInfo = new ProcessStartInfo();
-
-                        ditherInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                        ditherInfo.FileName = "cmd.exe";
-                        ditherInfo.Arguments = @"/C cd magick && magick mogrify -format png -colors 2 -type bilevel ..\frames\*.png";
-                        ditherInfo.RedirectStandardOutput = false;
-
-                        dither.StartInfo = ditherInfo;
-                        dither.Start();
-
-                        pbar.Tick();
-                        using (var child = pbar.Spawn(totalTicks, "Dithering...", childOptions))
+                        #region Dithering
+                        string[] Bitmapframes = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/frames", "*.png");
+                        NumericalSort(Bitmapframes);
+                        var imageEncoder = new ImageEncoder();
+                        var mode = config.DitheringMode;
+                        string modestring = String.Empty;
+                        using (var child = pbar.Spawn(2, "Dithering...", childOptions))
                         {
-                            child.Tick(5);
-                            dither.WaitForExit();
-                            dither.Dispose();
-                            child.Tick(10, "Dithered!");
+                            switch (mode)
+                            {
+                                case 0:
+                                    child.Tick(1, "Dithering Mode: None.");
+                                    bitmaps = null;
+                                    child.Tick(2, "Dithering Mode: None.");
+                                    break;
+                                case 14:
+                                    child.Tick(1, "Dithering Mode: imagemagick bilevel...");
+                                    bitmaps = null;
+                                    #region mogrify
+
+                                    Process dither = new Process();
+                                    ProcessStartInfo ditherInfo = new ProcessStartInfo();
+
+                                    ditherInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                                    ditherInfo.FileName = "cmd.exe";
+                                    ditherInfo.Arguments = "/C mogrify -format png -colors 2 -type bilevel frames/*.png";
+                                    ditherInfo.RedirectStandardOutput = false;
+                                    dither.StartInfo = ditherInfo;
+                                    dither.Start();
+                                    dither.WaitForExit();
+                                    dither.Dispose();
+                                    #endregion
+                                    child.Tick(2, "Dithering Mode: imagemagick bilevel, Done!");
+                                    break;
+                                default:
+                                    child.Tick(1, $"Dithering mode: {mode}");
+                                    imageEncoder.DoRinDithering(Bitmapframes, mode);
+                                    child.Tick(2, $"Dithering mode: {mode}, Done!");
+                                    break;
+                            }
+                            
+                            pbar.Tick(2);
                         }
+                        #endregion
+
 
                     }
-                    else
-                    {
-                        pbar.Tick(2);
-                    }
+
+                    pbar.Tick(2);
 
                     if (!File.Exists("frames/audio.wav"))
                     {
-                        Process audio = new Process();
-                        ProcessStartInfo audioInfo = new ProcessStartInfo();
-
-                        audioInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                        audioInfo.FileName = "cmd.exe";
-                        audioInfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\input.mp4 -ac 1 -ar 8192 ..\..\frames\audio.wav";
-                        audioInfo.RedirectStandardOutput = false;
-
-                        audio.StartInfo = audioInfo;
-                        audio.Start();
-
-                        pbar.Tick();
-                        using (var child = pbar.Spawn(totalTicks, "Writing Wav...", childOptions))
+                        using (var child = pbar.Spawn(2, "Writing Audio...", childOptions))
                         {
-                            child.Tick(5);
+                            child.Tick(1);
+                            #region audio
+                            Process audio = new Process();
+                            ProcessStartInfo audioInfo = new ProcessStartInfo();
+
+                            audioInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                            audioInfo.FileName = "cmd.exe";
+                            audioInfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\input.mp4 -ac 1 -ar 8192 ..\..\frames\audio.wav";
+                            audioInfo.RedirectStandardOutput = false;
+                            audio.StartInfo = audioInfo;
+                            audio.Start();
                             audio.WaitForExit();
                             audio.Dispose();
-                            child.Tick(10, "Audio Written!");
+                            #endregion
+                            child.Tick(2, "Audio Written!");
                         }
-
                     }
-                    else
-                    {
-                        pbar.Tick();
-                    }
+                    pbar.Tick(3);
 
-                    pbar.Tick();
 
-                    
-                    using (var child = pbar.Spawn(totalTicks, "Generating PPM...", childOptions))
+                    //ppm stuff
+
+                    //Get dummy flipnote
+                    //File can be replaced by user to automatically embed their own account information.
+                    using (var child = pbar.Spawn(4, "Generating Flipnote...", childOptions))
                     {
-                        //Get dummy flipnote
-                        //File can be replaced by user to automatically embed their own account information.
+                        child.Tick(1, "Getting Dummy Information...");
                         string[] dummyPath = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/DummyFlipnote", "*.ppm");
                         Flipnote dummy = new Flipnote(dummyPath[0]);
 
+                        pbar.Tick(4);
+
+                        child.Tick(2, "Getting Frame Data...");
                         //Get Frames and sort them
-                        child.Tick(2);
-                        string[] frames = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/frames", "*.png");
-                        NumericalSort(frames);
-                        child.Tick(5);
-                        //Create Encoder
-                        var encoder = new Encoder.Encoder(frames, dummy);
-                        child.Tick(8);
+                        Encoder.Encoder encoder = null;
+                        pbar.Tick(5);
+                        if (bitmaps == null)
+                        {
+                            string[] frames = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/frames", "*.png");
+                            NumericalSort(frames);
+                            child.Tick(3, "Encoding...");
+                            encoder = new Encoder.Encoder(frames, dummy);
+                        }
+                        else
+                        {
+                            child.Tick(3, "Encoding...");
+                            encoder = new Encoder.Encoder(bitmaps.ToList(), dummy);
+                        }
+                        pbar.Tick(6);
+
+
+
                         encoder.ResultNote.Save("out/" + encoder.ResultNote.Filename);
+
+                        child.Tick(4, "Encoded!");
 
                         if (encoder.ResultNote.Signed)
                         {
-                            pbar.Tick(10, "Finished! Flipnote: Signed! Press any key to exit.");
-
+                            pbar.Tick(10, "Finished! Flipnote: Signed. Press any key to exit.");
                         }
                         else
                         {
                             pbar.Tick(10, "Finished! Flipnote: Unsigned. Press any key to exit.");
                         }
-                        child.Tick(10, "PPM Written!");
-                        Console.ReadKey();
-                        return;
-
                     }
 
-
-
-
-
                 }
+                Console.ReadKey();
+                return;
+
+
+
 
             }
             catch (Exception e)

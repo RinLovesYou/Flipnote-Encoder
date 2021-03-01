@@ -493,7 +493,7 @@ namespace EncodeAndSign.Data
                 }
             }
             Thumbnail.WritePixels(new Int32Rect(0, 0, 128, 96), thumbnailPixels, 128, 0);
-            
+
         }
 
         byte GetCompositeThumbnailPixel(int x, int y)
@@ -529,7 +529,6 @@ namespace EncodeAndSign.Data
             var bruhh = BitmapImage2Bitmap(Thumbnail);
             var resized = new System.Drawing.Bitmap(bruhh, new System.Drawing.Size(bruhh.Width / 2, bruhh.Height / 2));
             var res = new byte[1536];
-            /// TO DO : change with the actual frame thumbnail
             for (int x = 0; x < 64; x++)
             {
                 for (int y = 0; y < 48; y++)
@@ -538,17 +537,19 @@ namespace EncodeAndSign.Data
                     if (b < 0.1)
                     {
                         w64SetPixel(res, x, y, TColor.Black);
-                    } else if(b > 0.8)
+                    }
+                    else if (b > 0.8)
                     {
                         w64SetPixel(res, x, y, TColor.White);
-                    } else
+                    }
+                    else
                     {
                         w64SetPixel(res, x, y, TColor.Gray);
                     }
                 }
             }
-                
-                    
+
+
             return res;
         }
 
