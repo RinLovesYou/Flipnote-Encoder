@@ -13,7 +13,7 @@ namespace EncodeAndSign.Encoder
 
         }
 
-        public void DoRinDithering(string[] filenames, int type)
+        public void DoRinDithering(string[] filenames, int type, float contrast)
         {
             List<Bitmap> bitmaps = new List<Bitmap>();
             IDither DitheringType = null;
@@ -41,24 +41,21 @@ namespace EncodeAndSign.Encoder
                     DitheringType = KnownDitherings.JarvisJudiceNinke;
                     break;
                 case 8:
-                    DitheringType = KnownDitherings.Sierra3;
-                    break;
-                case 9:
                     DitheringType = KnownDitherings.StevensonArce;
                     break;
-                case 10:
+                case 9:
                     DitheringType = KnownDitherings.Sierra2;
                     break;
-                case 11:
+                case 10:
                     DitheringType = KnownDitherings.Sierra3;
                     break;
-                case 12:
+                case 11:
                     DitheringType = KnownDitherings.SierraLite;
                     break;
-                case 13:
+                case 12:
                     DitheringType = KnownDitherings.Stucki;
                     break;
-                case 14:
+                case 13:
                     DitheringType = KnownDitherings.Ordered3x3;
                     break;
                 default:
@@ -72,6 +69,10 @@ namespace EncodeAndSign.Encoder
                 {
                     image.Mutate(x =>
                     {
+                        if(contrast != 0)
+                        {
+                            x.Contrast(contrast);
+                        }        
                         x.BinaryDither(DitheringType);
                     });
                     image.SaveAsPng($"frames/frame_{i}.png");

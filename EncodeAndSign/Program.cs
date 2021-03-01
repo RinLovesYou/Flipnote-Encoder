@@ -1,14 +1,17 @@
 ﻿using EncodeAndSign.Data;
 using EncodeAndSign.Encoder;
 using Newtonsoft.Json;
+using Octokit;
 using ShellProgressBar;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 
 /* this code sucks. this code sucks. this code sucks. this code sucks.
@@ -22,6 +25,36 @@ namespace EncodeAndSign
 {
     class Program
     {
+        private static bool Update = false;
+
+        private static async Task UpdateCheck()
+        {
+            //Get all releases from GitHub
+            //Source: https://octokitnet.readthedocs.io/en/latest/getting-started/
+            GitHubClient client = new GitHubClient(new ProductHeaderValue("Update-Check"));
+            IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("RinLovesYou", "Flipnote-Encoder");
+
+            //Setup the versions
+            Version latestGitHubVersion = new Version(releases[0].TagName);
+            Version localVersion = new Version("4.1.1");
+
+            //Compare the Versions
+            //Source: https://stackoverflow.com/questions/7568147/compare-version-numbers-without-using-split-function
+            int versionComparison = localVersion.CompareTo(latestGitHubVersion);
+            if (versionComparison < 0)
+            {
+                Update = true;
+            }
+            else if (versionComparison > 0)
+            {
+                //not gonna happen
+            }
+            else
+            {
+                Update = false;
+            }
+        }
+
         //shit that i need because the program might get stuck executing in the background, this is due to the use of console commands.
         //todo: internalize ffmpeg and imagemagick use
         private static bool _quitRequested = false;
@@ -32,11 +65,22 @@ namespace EncodeAndSign
 
         static void Main(string[] args)
         {
+            try
+            {
+                var task = UpdateCheck();
+                task.Wait();
+            } catch (Exception e)
+            {
+
+            }
+
+            
             if (!File.Exists("config.json"))
             {
                 var newConfig = new Config();
                 newConfig.Accurate = true;
                 newConfig.DitheringMode = 1;
+                newConfig.Contrast = 0;
                 newConfig.Split = false;
                 config = newConfig;
 
@@ -75,13 +119,30 @@ namespace EncodeAndSign
             do
             {
 
-                //do Encoding
+                if (Update)
+                {
+                    Console.WriteLine("A Newer Version is available! would you like to update? y/n");
+                    var answer = Console.ReadKey(true);
+                    if(answer.Key == ConsoleKey.Y)
+                    {
+                        Process.Start("http://www.github.com/RinLovesYou/Flipnote-Encoder/releases/latest");
+                        return;
+                    } else if (answer.Key == ConsoleKey.N)
+                    {
+                        CreateAndSignFlipnote();
+                    }
+                } else
+                {
+                    CreateAndSignFlipnote();
+                }
 
-                CreateAndSignFlipnote();
+                
 
 
                 SetQuitRequested();
             } while (!_quitRequested);
+
+            
             // signal that we want to quit
             SetQuitRequested();
             // wait until the message pump says it's done
@@ -224,7 +285,7 @@ namespace EncodeAndSign
                                     bitmaps = null;
                                     child.Tick(2, "Dithering Mode: None.");
                                     break;
-                                case 15:
+                                case 14:
                                     child.Tick(1, "Dithering Mode: imagemagick bilevel...");
                                     bitmaps = null;
                                     #region mogrify
@@ -245,7 +306,7 @@ namespace EncodeAndSign
                                     break;
                                 default:
                                     child.Tick(1, $"Dithering mode: {mode}");
-                                    imageEncoder.DoRinDithering(Bitmapframes, mode);
+                                    imageEncoder.DoRinDithering(Bitmapframes, mode, config.Contrast);
                                     child.Tick(2, $"Dithering mode: {mode}, Done!");
                                     break;
                             }
@@ -322,15 +383,19 @@ namespace EncodeAndSign
                         if (encoder.ResultNote.Signed)
                         {
                             pbar.Tick(10, "Finished! Flipnote: Signed. Press any key to exit.");
+                            Console.ReadKey();
+                            pbar.Dispose();
                         }
                         else
                         {
                             pbar.Tick(10, "Finished! Flipnote: Unsigned. Press any key to exit.");
+                            Console.ReadKey();
+                            pbar.Dispose();
                         }
                     }
 
                 }
-                Console.ReadKey();
+                
                 return;
 
 
