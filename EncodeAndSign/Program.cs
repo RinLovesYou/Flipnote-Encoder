@@ -224,7 +224,7 @@ namespace EncodeAndSign
                                     bitmaps = null;
                                     child.Tick(2, "Dithering Mode: None.");
                                     break;
-                                case 14:
+                                case 15:
                                     child.Tick(1, "Dithering Mode: imagemagick bilevel...");
                                     bitmaps = null;
                                     #region mogrify
