@@ -20,8 +20,8 @@ Here you can see all the config Items with a description of how to use them:
 ```Java
 {
   // One of 16 possible Dithering algorithms. Most of these don't require imagemagick to be installed, except for the last one.
-  // 0 = None, 1-3 = Bayer8x8/4x4/1x1, 4 = Floyd Steinberg, 5 = Atkinson, 6 = Burkes, 7 = Jarvis, 8 = Sierra3, 9 = StevensonArce, 10 = Sierra2, 11 = Sierra3 (duplicate) 
-  // 12 = SierraLite, 13 = Stucki, 14 = Ordered3x3, 15 = imagemagick (needs to be installed)
+  // 0 = None, 1-3 = Bayer8x8/4x4/1x1, 4 = Floyd Steinberg, 5 = Atkinson, 6 = Burkes, 7 = Jarvis, 8 = StevensonArce, 9 = Sierra2, 10 = Sierra3 
+  // 11 = SierraLite, 12 = Stucki, 13 = Ordered3x3, 14 = imagemagick (needs to be installed)
   // Different Algorithms will look better on different videos.
   "DitheringMode": 1,
   // Wether or not to turn the Video into 30FPS to fix sound sync issues. Is on by default to avoid these issues. Can save a bit on filesize for <30FPS videos.
