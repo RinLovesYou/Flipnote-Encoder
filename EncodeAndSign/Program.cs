@@ -36,7 +36,7 @@ namespace EncodeAndSign
 
             //Setup the versions
             Version latestGitHubVersion = new Version(releases[0].TagName);
-            Version localVersion = new Version("4.1.1");
+            Version localVersion = new Version("4.1.2");
 
             //Compare the Versions
             //Source: https://stackoverflow.com/questions/7568147/compare-version-numbers-without-using-split-function

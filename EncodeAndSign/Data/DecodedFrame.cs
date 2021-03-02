@@ -4,10 +4,11 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static EncodeAndSign.Data.Flipnote;
 
 
-//Credit: miso-xyz
-//https://github.com/miso-xyz/FlipnoteDesktop
+//Credit: NotImplementedLife
+//https://github.com/NotImplementedLife
 
 namespace EncodeAndSign.Data
 {
@@ -586,12 +587,19 @@ namespace EncodeAndSign.Data
             header |= (byte)(((int)Layer1Color + 1) << 1);
             header |= (byte)(IsPaperWhite ? 1 : 0);
             fd.FirstByteHeader = header;
+            
             for (int x = 0; x < 256; x++)
+            {
                 for (int y = 0; y < 192; y++)
                 {
                     fd.Layer1[y, x] = Layer1Data[x, y];
                     fd.Layer2[y, x] = Layer2Data[x, y];
                 }
+            }
+
+            
+
+
             return fd;
         }
     }

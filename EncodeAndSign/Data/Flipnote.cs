@@ -10,8 +10,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Media;
 
-//credit: miso-xyz
-//https://github.com/miso-xyz/FlipnoteDesktop
+//credit: NotImplementedLife
+//https://github.com/NotImplementedLife
 //Edit of miso's flipnote class to extend functionality needed for audio injection.
 
 namespace EncodeAndSign.Data
@@ -595,7 +595,7 @@ namespace EncodeAndSign.Data
             /// <param name="target">Could be Layer1LineEncoding or Layer2LineEncoding</param>
             /// <param name="index">Index of line whose compression to be set</param>
             /// <param name="value">Compression type (could be 0, 1, 2 or 3)</param>
-            private void SetLineEncoding(byte[] target, int index, int value)
+            public void SetLineEncoding(byte[] target, int index, int value)
             {
                 int o = index >> 2;
                 int pos = (index & 0x3) * 2;
@@ -644,7 +644,7 @@ namespace EncodeAndSign.Data
                 for (int l = 0; l < 192; l++)
                 {
                     SetLineEncoding(Layer1LineEncoding, l, L1ChooseLineEncoding(l));
-                    SetLineEncoding(Layer2LineEncoding, l, L2ChooseLineEncoding(l));
+                    SetLineEncoding(Layer2LineEncoding, l, 0);
                 }
                 res.AddRange(Layer1LineEncoding);
                 res.AddRange(Layer2LineEncoding);

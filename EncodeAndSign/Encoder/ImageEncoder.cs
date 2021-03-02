@@ -68,7 +68,7 @@ namespace EncodeAndSign.Encoder
                 using (SixLabors.ImageSharp.Image image = SixLabors.ImageSharp.Image.Load(filenames[i]))
                 {
                     image.Mutate(x =>
-                    {
+                    {                      
                         if(contrast != 0)
                         {
                             x.Contrast(contrast);

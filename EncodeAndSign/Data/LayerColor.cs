@@ -1,5 +1,5 @@
-﻿//credit: miso-xyz
-//https://github.com/miso-xyz/FlipnoteDesktop
+﻿//Credit: NotImplementedLife
+//https://github.com/NotImplementedLife
 namespace EncodeAndSign.Data
 {
     public enum LayerColor
