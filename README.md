@@ -19,13 +19,15 @@ Located inside the Root folder is a config.json. Should it not exist, a new one 
 Here you can see all the config Items with a description of how to use them:
 ```Java
 {
-  // One of 16 possible Dithering algorithms. Most of these don't require imagemagick to be installed, except for the last one.
-  // 0 = None, 1-3 = Bayer8x8/4x4/1x1, 4 = Floyd Steinberg, 5 = Atkinson, 6 = Burkes, 7 = Jarvis, 8 = Sierra3, 9 = StevensonArce, 10 = Sierra2, 11 = Sierra3 (duplicate) 
-  // 12 = SierraLite, 13 = Stucki, 14 = Ordered3x3, 15 = imagemagick (needs to be installed)
+  // One of 14 possible Dithering algorithms. Most of these don't require imagemagick to be installed, except for the last one.
+  // 0 = None, 1-3 = Bayer8x8/4x4/1x1, 4 = Floyd Steinberg, 5 = Atkinson, 6 = Burkes, 7 = Jarvis, 8 = StevensonArce, 9 = Sierra2, 10 = Sierra3 
+  // 11 = SierraLite, 12 = Stucki, 13 = Ordered3x3, 14 = imagemagick (needs to be installed)
   // Different Algorithms will look better on different videos.
   "DitheringMode": 1,
   // Wether or not to turn the Video into 30FPS to fix sound sync issues. Is on by default to avoid these issues. Can save a bit on filesize for <30FPS videos.
   "Accurate": true,
+  // Adds the option for contrast bump, helps with visual clarity in some cases
+  "Contrast": 0,
   // Not working, once implemented will split the video into parts that are all playable on a dsi/3ds
   "Split": false
 }
@@ -48,10 +50,12 @@ it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back wi
 
 ## Special Thanks
 * [khang06](https://github.com/khang06) For his awesome encoder, being the inspiration, and his help in understanding audio.
-* [miso-xyz](https://github.com/miso-xyz) For his FlipnoteDesktop program, which helped a lot in understanding the structure of a Flipnote.
+* [NotImplementedLife](https://github.com/NotImplementedLife) For their FlipnoteDesktop program, which helped a lot in understanding the structure of a Flipnote.
 * guys from [DSiBrew](https://dsibrew.org/wiki/Main_Page) and [Flipnote Collective](https://github.com/Flipnote-Collective) for their awesome documentation on .PPM file format.
 
 # Note
 Flipnote Studio is a trademark of Nintendo. This project is not linked to them in any way. It is intended for educational purposes only.
+
+This is a program, not responsible for any use that does not follow Sudomemo's TOS, I do not take responsibility for misuse of the tool. Reminder of Section 4.1.1 from Sudomemo Terms of Use: The following activities are prohibited when using Sudomemo: Exploits or content that wasn’t created in the original Flipnote Studio software on a Nintendo DSi or Nintendo 3DS. Plus, animating on a DS is much more fun :) . That's all
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
