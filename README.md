@@ -50,10 +50,12 @@ it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back wi
 
 ## Special Thanks
 * [khang06](https://github.com/khang06) For his awesome encoder, being the inspiration, and his help in understanding audio.
-* [miso-xyz](https://github.com/miso-xyz) For his FlipnoteDesktop program, which helped a lot in understanding the structure of a Flipnote.
+* [NotImplementedLife](https://github.com/NotImplementedLife) For their FlipnoteDesktop program, which helped a lot in understanding the structure of a Flipnote.
 * guys from [DSiBrew](https://dsibrew.org/wiki/Main_Page) and [Flipnote Collective](https://github.com/Flipnote-Collective) for their awesome documentation on .PPM file format.
 
 # Note
 Flipnote Studio is a trademark of Nintendo. This project is not linked to them in any way. It is intended for educational purposes only.
+
+This is a program, not responsible for any use that does not follow Sudomemo's TOS, I do not take responsibility for misuse of the tool. Reminder of Section 4.1.1 from Sudomemo Terms of Use: The following activities are prohibited when using Sudomemo: Exploits or content that wasn’t created in the original Flipnote Studio software on a Nintendo DSi or Nintendo 3DS. Plus, animating on a DS is much more fun :) . That's all
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
