@@ -29,7 +29,9 @@ Here you can see all the config Items with a description of how to use them:
   // Adds the option for contrast bump, helps with visual clarity in some cases
   "Contrast": 0,
   // Not working, once implemented will split the video into parts that are all playable on a dsi/3ds
-  "Split": false
+  "Split": false,
+  // Self Explanatory
+  "DeleteOnFinish": true
 }
 ```
 
