@@ -14,6 +14,8 @@ uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 * Replace the Dummy Flipnote with one of your own. This will embed your User Information
 * (Optional) place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
 
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-energy-drinks.svg)](https://forthebadge.com)
+
 # config.json
 Located inside the Root folder is a config.json. Should it not exist, a new one will be created by the program.
 Here you can see all the config Items with a description of how to use them:
@@ -59,5 +61,7 @@ it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back wi
 Flipnote Studio is a trademark of Nintendo. This project is not linked to them in any way. It is intended for educational purposes only.
 
 This is a program, not responsible for any use that does not follow Sudomemo's TOS, I do not take responsibility for misuse of the tool. Reminder of Section 4.1.1 from Sudomemo Terms of Use: The following activities are prohibited when using Sudomemo: Exploits or content that wasn’t created in the original Flipnote Studio software on a Nintendo DSi or Nintendo 3DS. Plus, animating on a DS is much more fun :) . That's all
+
+[![forthebadge](https://forthebadge.com/images/badges/mom-made-pizza-rolls.svg)](https://forthebadge.com)
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
