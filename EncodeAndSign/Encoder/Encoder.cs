@@ -7,7 +7,7 @@ namespace EncodeAndSign.Encoder
     public class Encoder
     {
         public Flipnote ResultNote { get; set; }
-        public Encoder(string[] frames, Flipnote dummy)
+        public Encoder(string[] frames, Flipnote dummy, Config config)
         {
 
             FrameDecoder FrameDecoder = new FrameDecoder(frames);
@@ -18,16 +18,16 @@ namespace EncodeAndSign.Encoder
             ResultNote = encoded;
         }
 
-        public Encoder(List<Bitmap> frames, Flipnote dummy)
-        {
+        //public Encoder(List<Bitmap> frames, Flipnote dummy)
+        //{
 
-            FrameDecoder FrameDecoder = new FrameDecoder(frames);
+        //    FrameDecoder FrameDecoder = new FrameDecoder(frames);
 
-            Flipnote encoded = Flipnote.New(dummy.Metadata.CurrentAuthorName, dummy.Metadata.CurrentAuthorId, ToDecodedFrame(FrameDecoder.BoolFrames), false);
+        //    Flipnote encoded = Flipnote.New(dummy.Metadata.CurrentAuthorName, dummy.Metadata.CurrentAuthorId, FrameDecoder.BoolFrames, false);
 
-            //todo: use this for metadata display i guess
-            ResultNote = encoded;
-        }
+        //    //todo: use this for metadata display i guess
+        //    ResultNote = encoded;
+        //}
 
         public List<DecodedFrame> ToDecodedFrame(List<bool[,]> input)
         {

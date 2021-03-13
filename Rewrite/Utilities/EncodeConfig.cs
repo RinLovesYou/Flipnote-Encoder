@@ -1,16 +1,23 @@
 ﻿using Newtonsoft.Json;
 
-namespace EncodeAndSign
+namespace Rewrite.Utilities
 {
     [JsonObject]
-    public class Config
+    public class EncodeConfig
     {
+        
         public int DitheringMode { get; set; }
+        public int ColorMode { get; set; }
+
         public bool Accurate { get; set; }
         public int Contrast { get; set; }
+
+        public string InputFolder { get; set; }
+        public string InputFilename { get; set; }
+
         public bool Split { get; set; }
         public bool DeleteOnFinish { get; set; }
 
-        public Config() { }
+        public EncodeConfig() { }
     }
 }

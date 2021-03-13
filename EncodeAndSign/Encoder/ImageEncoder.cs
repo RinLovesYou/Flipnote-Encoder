@@ -1,8 +1,10 @@
 ﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Processors.Dithering;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.IO;
 
 namespace EncodeAndSign.Encoder
 {
@@ -13,9 +15,10 @@ namespace EncodeAndSign.Encoder
 
         }
 
+
+
         public void DoRinDithering(string[] filenames, int type, float contrast)
         {
-            List<Bitmap> bitmaps = new List<Bitmap>();
             IDither DitheringType = null;
             switch (type)
             {
@@ -63,17 +66,39 @@ namespace EncodeAndSign.Encoder
                     DitheringType = KnownDitherings.Bayer8x8;
                     break;
             }
+
+            List<Color> colors = new List<Color>();
+            colors.Add(Color.Red);
+            //colors.Add(Color.Blue);
+            colors.Add(Color.Black);
+            colors.Add(Color.White);
+            colors.Add(Color.Blue);
+
             for (int i = 0; i < filenames.Length; i++)
             {
-                using (SixLabors.ImageSharp.Image image = SixLabors.ImageSharp.Image.Load(filenames[i]))
+                Directory.CreateDirectory("tmp");
+                using (Image<Rgba32> image = (Image<Rgba32>)Image.Load(filenames[i]))
                 {
+                    Image<Rgba32> bw = image.Clone();
+                    bw.Mutate(x =>
+                    {
+                        x.Contrast(3f);
+                        x.BinaryDither(DitheringType, Color.Black, Color.White);
+                    });
+                    bw.Save($"tmp/frame_{i}.png");
+                    bw.Dispose();
+
                     image.Mutate(x =>
-                    {                      
-                        if(contrast != 0)
+                    {
+                        if (contrast != 0)
                         {
                             x.Contrast(contrast);
-                        }        
-                        x.BinaryDither(DitheringType);
+                        }
+                        //x.BinaryDither(DitheringType);
+                        var Palette = new ReadOnlyMemory<Color>(colors.ToArray());
+                        
+
+                        x.Dither(DitheringType, Palette);
                     });
                     image.SaveAsPng($"frames/frame_{i}.png");
                     image.Dispose();

@@ -6,7 +6,6 @@ using ShellProgressBar;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -36,7 +35,8 @@ namespace EncodeAndSign
 
             //Setup the versions
             Version latestGitHubVersion = new Version(releases[0].TagName);
-            Version localVersion = new Version("4.1.2");
+            Version localVersion = new Version("4.2.0");
+            // weed release
 
             //Compare the Versions
             //Source: https://stackoverflow.com/questions/7568147/compare-version-numbers-without-using-split-function
@@ -61,7 +61,7 @@ namespace EncodeAndSign
         private static object _syncLock = new object();
         private static AutoResetEvent _waitHandle = new AutoResetEvent(false);
 
-        private static Config config = null;
+        private static Config FlipnoteConfig = null;
 
         static void Main(string[] args)
         {
@@ -69,12 +69,13 @@ namespace EncodeAndSign
             {
                 var task = UpdateCheck();
                 task.Wait();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
 
             }
 
-            
+            // initialize config
             if (!File.Exists("config.json"))
             {
                 var newConfig = new Config();
@@ -82,7 +83,8 @@ namespace EncodeAndSign
                 newConfig.DitheringMode = 1;
                 newConfig.Contrast = 0;
                 newConfig.Split = false;
-                config = newConfig;
+                newConfig.DeleteOnFinish = true;
+                FlipnoteConfig = newConfig;
 
 
                 JsonSerializer serializer = new JsonSerializer();
@@ -106,7 +108,7 @@ namespace EncodeAndSign
                 using (JsonReader writer = new JsonTextReader(sw))
                 {
                     var read = serializer.Deserialize<Config>(writer);
-                    config = read;
+                    FlipnoteConfig = read;
                     // {"ExpiryDate":new Date(1230375600000),"Price":0}
                 }
             }
@@ -123,26 +125,24 @@ namespace EncodeAndSign
                 {
                     Console.WriteLine("A Newer Version is available! would you like to update? y/n");
                     var answer = Console.ReadKey(true);
-                    if(answer.Key == ConsoleKey.Y)
+                    if (answer.Key == ConsoleKey.Y)
                     {
                         Process.Start("http://www.github.com/RinLovesYou/Flipnote-Encoder/releases/latest");
                         return;
-                    } else if (answer.Key == ConsoleKey.N)
+                    }
+                    else if (answer.Key == ConsoleKey.N)
                     {
                         CreateAndSignFlipnote();
                     }
-                } else
+                }
+                else
                 {
                     CreateAndSignFlipnote();
                 }
 
-                
-
-
                 SetQuitRequested();
             } while (!_quitRequested);
 
-            
             // signal that we want to quit
             SetQuitRequested();
             // wait until the message pump says it's done
@@ -178,6 +178,8 @@ namespace EncodeAndSign
             Console.WriteLine("exit");
         }
 
+
+
         private static void CreateAndSignFlipnote()
         {
             //no input, stop
@@ -202,7 +204,6 @@ namespace EncodeAndSign
                     CollapseWhenFinished = false,
                     ProgressCharacter = '─'
                 };
-                Bitmap[] bitmaps = null;
                 using (var pbar = new ProgressBar(totalTicks, "Flipnote Progress", options))
                 {
 
@@ -212,7 +213,7 @@ namespace EncodeAndSign
 
                         //todo: Stop running console commands
                         //Turn video into 30FPS, fixed sound sync issues (https://github.com/khang06/dsiflipencode/pull/5)
-                        if (config.Accurate)
+                        if (FlipnoteConfig.Accurate)
                         {
                             using (var child = pbar.Spawn(2, "Mode: Accurate, Splitting Frames...", childOptions))
                             {
@@ -256,7 +257,7 @@ namespace EncodeAndSign
                                 ProcessStartInfo frameinfo = new ProcessStartInfo();
                                 frameinfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                                 frameinfo.FileName = "cmd.exe";
-                                frameinfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\input.mp4 -vf scale=256:192 ..\..\frames\frame_%d.png";
+                                frameinfo.Arguments = @"/C cd ffmpeg/bin && ffmpeg -i ..\..\frames\input.mp4 ..\..\frames\frame_%d.png";
                                 frameinfo.RedirectStandardOutput = false;
                                 framerate.StartInfo = frameinfo;
                                 framerate.Start();
@@ -270,24 +271,22 @@ namespace EncodeAndSign
 
                         File.Copy("frames/frame_1.png", "frames/frame_0.png");
 
+
                         #region Dithering
-                        string[] Bitmapframes = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/frames", "*.png");
-                        NumericalSort(Bitmapframes);
+                        string[] Images = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/frames", "*.png");
+                        NumericalSort(Images);
                         var imageEncoder = new ImageEncoder();
-                        var mode = config.DitheringMode;
+                        var mode = FlipnoteConfig.DitheringMode;
                         string modestring = String.Empty;
                         using (var child = pbar.Spawn(2, "Dithering...", childOptions))
                         {
                             switch (mode)
                             {
                                 case 0:
-                                    child.Tick(1, "Dithering Mode: None.");
-                                    bitmaps = null;
                                     child.Tick(2, "Dithering Mode: None.");
                                     break;
                                 case 14:
                                     child.Tick(1, "Dithering Mode: imagemagick bilevel...");
-                                    bitmaps = null;
                                     #region mogrify
 
                                     Process dither = new Process();
@@ -306,11 +305,11 @@ namespace EncodeAndSign
                                     break;
                                 default:
                                     child.Tick(1, $"Dithering mode: {mode}");
-                                    imageEncoder.DoRinDithering(Bitmapframes, mode, config.Contrast);
+                                    imageEncoder.DoRinDithering(Images, mode, FlipnoteConfig.Contrast);
                                     child.Tick(2, $"Dithering mode: {mode}, Done!");
                                     break;
                             }
-                            
+
                             pbar.Tick(2);
                         }
                         #endregion
@@ -360,18 +359,12 @@ namespace EncodeAndSign
                         //Get Frames and sort them
                         Encoder.Encoder encoder = null;
                         pbar.Tick(5);
-                        if (bitmaps == null)
-                        {
-                            string[] frames = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/frames", "*.png");
-                            NumericalSort(frames);
-                            child.Tick(3, "Encoding...");
-                            encoder = new Encoder.Encoder(frames, dummy);
-                        }
-                        else
-                        {
-                            child.Tick(3, "Encoding...");
-                            encoder = new Encoder.Encoder(bitmaps.ToList(), dummy);
-                        }
+
+                        string[] frames = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/frames", "*.png");
+                        NumericalSort(frames);
+                        child.Tick(3, "Encoding...");
+                        encoder = new Encoder.Encoder(frames, dummy, FlipnoteConfig);
+
                         pbar.Tick(6);
 
 
@@ -380,9 +373,15 @@ namespace EncodeAndSign
 
                         child.Tick(4, "Encoded!");
 
+                        if (FlipnoteConfig.DeleteOnFinish)
+                        {
+                            Cleanup();
+
+                        }
+
                         if (encoder.ResultNote.Signed)
                         {
-                            pbar.Tick(10, "Finished! Flipnote: Signed. Press any key to exit.");
+                            pbar.Tick(10, "Finished! Flipnote: Signed! Press any key to exit.");
                             Console.ReadKey();
                             pbar.Dispose();
                         }
@@ -392,10 +391,11 @@ namespace EncodeAndSign
                             Console.ReadKey();
                             pbar.Dispose();
                         }
+
                     }
 
                 }
-                
+
                 return;
 
 
@@ -412,6 +412,22 @@ namespace EncodeAndSign
                     p.Dispose();
                 });
             }
+
+
+        }
+
+        public static void Cleanup()
+        {
+
+            var delfiles = Directory.EnumerateFiles("frames");
+            delfiles.ToList().ForEach(f =>
+            {
+                if (!f.EndsWith("mp4"))
+                {
+                    File.Delete(f);
+                }
+
+            });
 
 
         }
