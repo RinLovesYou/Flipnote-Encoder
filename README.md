@@ -22,8 +22,8 @@ uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 Located inside the Root folder is a config.json. Should it not exist, a new one will be created by the program.
 Here you can see all the config Items with a description of how to use them:
 
-  * "DitheringMode": 1, - refer to (wiki)[https://github.com/RinLovesYou/Flipnote-Encoder/wiki/Dithering-Modes]
-  * "ColorMode": 1, - refer to (wiki)[https://github.com/RinLovesYou/Flipnote-Encoder/wiki/Color-Modes]
+  * "DitheringMode": 1, - refer to [wiki](https://github.com/RinLovesYou/Flipnote-Encoder/wiki/Dithering-Modes)
+  * "ColorMode": 1, - refer to [wiki](https://github.com/RinLovesYou/Flipnote-Encoder/wiki/Color-Modes)
   * "Accurate": true, - Wether to force 30FPS or not. Fixes audio sync. 
   * "Contrast": 0, - How much contrast to add
   * "InputFolder": "frames",
