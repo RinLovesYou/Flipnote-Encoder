@@ -5,7 +5,7 @@ namespace Rewrite.Utilities
     [JsonObject]
     public class EncodeConfig
     {
-        
+
         public int DitheringMode { get; set; }
         public int ColorMode { get; set; }
 
@@ -16,6 +16,7 @@ namespace Rewrite.Utilities
         public string InputFilename { get; set; }
 
         public bool Split { get; set; }
+        public int SplitAmount { get; set; }
         public bool DeleteOnFinish { get; set; }
 
         public EncodeConfig() { }

@@ -96,7 +96,7 @@ namespace EncodeAndSign.Encoder
                         }
                         //x.BinaryDither(DitheringType);
                         var Palette = new ReadOnlyMemory<Color>(colors.ToArray());
-                        
+
 
                         x.Dither(DitheringType, Palette);
                     });

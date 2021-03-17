@@ -1,6 +1,7 @@
 ﻿using FFMpegCore;
 using Newtonsoft.Json;
 using PPMLib;
+using PPMLib.Encoders;
 using Rewrite.Encoder;
 using Rewrite.Utilities;
 using System;
@@ -47,55 +48,91 @@ namespace Rewrite
             var encoder = new FlipnoteEncoder();
 
             var encoded = encoder.Encode();
-            Mp4Encoder mp4 = new Mp4Encoder(encoded);
-            var a = mp4.EncodeMp4("out", 2);
-            if (FlipnoteConfig.Split)
+            if (encoded != null)
             {
-
-
+                Directory.CreateDirectory("tmp");
                 encoded.Save($"tmp/{encoded.CurrentFilename}.ppm");
-                var bytelength = new FileInfo($"tmp/{encoded.CurrentFilename}.ppm").Length;
-                bytelength = bytelength / 1024;
-                Console.WriteLine(bytelength / 1024);
-                var MB = bytelength / 1024;
-                if (MB >= 1)
+
+                if (FlipnoteConfig.Split)
                 {
-                    List<PPMFile> files = new List<PPMFile>();
-                    File.Delete($"tmp/{encoded.CurrentFilename}.ppm");
-                    var framesframes = encoded.Frames.ToArray().Split((int)(encoded.Frames.Length / (MB + 2)));
-                    var audioaudio = encoded.Audio.SoundData.RawBGM.ToArray().Split((int)(encoded.Audio.SoundData.RawBGM.Length / (MB + 2)));
-                    int i = 0;
-                    framesframes.ToList().ForEach(frames =>
+                    double bytelength = new FileInfo($"tmp/{encoded.CurrentFilename}.ppm").Length;
+                    bytelength = bytelength / 1024;
+                    Console.WriteLine(bytelength);
+                    var MB = bytelength / 1024;
+                    if (MB >= 1)
                     {
-                        var aaa = PPMFile.Create(encoded.CurrentAuthor, frames.ToList(), audioaudio.ToList()[i].ToArray());
-                        aaa.Save($"out/{aaa.CurrentFilename}_{i}.ppm");
-                        i++;
-                    });
+                        List<PPMFile> files = new List<PPMFile>();
+                        Console.WriteLine(MB);
+                        var framesframes = encoded.Frames.ToArray().Split((int)(encoded.Frames.Length / MB + 1));
+                        var audioaudio = encoded.Audio.SoundData.RawBGM.ToArray().Split((int)(encoded.Audio.SoundData.RawBGM.Length / MB + 1));
+                        if (MB > 1.3)
+                        {
+                            framesframes = encoded.Frames.ToArray().Split((int)(encoded.Frames.Length / MB + 2));
+                            audioaudio = encoded.Audio.SoundData.RawBGM.ToArray().Split((int)(encoded.Audio.SoundData.RawBGM.Length / MB + 2));
+                        }
+
+                        for (int i = 0; i < framesframes.Count(); i++)
+                        {
+                            var aaa = PPMFile.Create(encoded.CurrentAuthor, framesframes.ToList()[i].ToList(), audioaudio.ToList()[i].ToArray());
+                            aaa.Save($"out/{aaa.CurrentFilename}_{i}.ppm");
+                        }
+                    }
+                    else
+                    {
+                        encoded.Save($"out/{encoded.CurrentFilename}.ppm");
+                    }
                 }
                 else
                 {
                     encoded.Save($"out/{encoded.CurrentFilename}.ppm");
                 }
-            } else
+                var mp4try = new PPMFile();
+                mp4try.LoadFrom($"tmp/{encoded.CurrentFilename}.ppm");
+                Mp4Encoder mp4 = new Mp4Encoder(mp4try);
+                var a = mp4.EncodeMp4("out", 2);
+            }
+            else
             {
-                encoded.Save($"out/{encoded.CurrentFilename}.ppm");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("There was a problem creating the flipnote.");
+                Console.WriteLine("Please join the support server for further assistance with this issue");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Press any Key to continue...");
+                Console.ReadKey();
             }
             Cleanup();
         }
 
         private static void Cleanup()
         {
-            if(Directory.Exists("tmp"))
+            if (Directory.Exists("tmp"))
             {
                 try
                 {
-                    string[] files = Directory.EnumerateFiles("tmp", "*.png").ToArray();
+                    string[] files = Directory.EnumerateFiles("tmp").ToArray();
                     files.ToList().ForEach(f =>
                     {
                         File.Delete(f);
                     });
                     Directory.Delete("tmp");
-                } catch(Exception e)
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+            if (Directory.Exists($"out/temp"))
+            {
+                try
+                {
+                    string[] files = Directory.EnumerateFiles("out/temp").ToArray();
+                    files.ToList().ForEach(f =>
+                    {
+                        File.Delete(f);
+                    });
+                    Directory.Delete("out/temp");
+                }
+                catch (Exception e)
                 {
 
                 }
@@ -107,12 +144,13 @@ namespace Rewrite
                 files.ToList().ForEach(f =>
                 {
                     File.Delete(f);
-                    if (File.Exists($"{FlipnoteConfig.InputFolder}/{FlipnoteConfig.InputFilename}.wav")) 
+                    if (File.Exists($"{FlipnoteConfig.InputFolder}/{FlipnoteConfig.InputFilename}.wav"))
                     {
                         File.Delete($"{FlipnoteConfig.InputFolder}/{FlipnoteConfig.InputFilename}.wav");
                     }
                 });
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
 
             }
@@ -135,6 +173,7 @@ namespace Rewrite
                 newEncodeConfig.InputFolder = "frames";
                 newEncodeConfig.Split = false;
                 newEncodeConfig.DeleteOnFinish = true;
+                newEncodeConfig.SplitAmount = 2;
                 FlipnoteConfig = newEncodeConfig;
 
                 JsonSerializer serializer = new JsonSerializer();

@@ -1,6 +1,5 @@
 ﻿using EncodeAndSign.Data;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace EncodeAndSign.Encoder
 {

@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Rewrite.Encoder
 {
@@ -72,8 +71,7 @@ namespace Rewrite.Encoder
                     DitheringType = KnownDitherings.Ordered3x3;
                     break;
                 default:
-                    //this one is my favorite :)
-                    DitheringType = KnownDitherings.Bayer8x8;
+                    DitheringType = null;
                     break;
             }
 
@@ -82,37 +80,43 @@ namespace Rewrite.Encoder
             colors.Add(Color.Black);
             colors.Add(Color.White);
             colors.Add(Color.Blue);
-
-            for (int i = 0; i < filenames.Length; i++)
+            if (DitheringType != null)
             {
-                Directory.CreateDirectory("tmp");
-                using (Image<Rgba32> image = (Image<Rgba32>)Image.Load(filenames[i]))
+                for (int i = 0; i < filenames.Length; i++)
                 {
-                    Image<Rgba32> bw = image.Clone();
-                    bw.Mutate(x =>
+                    Directory.CreateDirectory("tmp");
+                    using (Image<Rgba32> image = (Image<Rgba32>)Image.Load(filenames[i]))
                     {
-                        x.Contrast(contrast + 2);
-                        x.BinaryDither(DitheringType, Color.Black, Color.White);
-                    });
-                    bw.Save($"tmp/frame_{i}.png");
-                    bw.Dispose();
-
-                    image.Mutate(x =>
-                    {
-                        if (contrast != 0)
+                        Image<Rgba32> bw = image.Clone();
+                        bw.Mutate(x =>
                         {
-                            x.Contrast(contrast);
-                        }
-                        //x.BinaryDither(DitheringType);
-                        var Palette = new ReadOnlyMemory<Color>(colors.ToArray());
+                            if (contrast != 0)
+                            {
+                                x.Contrast(contrast);
+                            }
+                            x.BinaryDither(DitheringType);
+                        });
+                        bw.Save($"tmp/frame_{i}.png");
+                        bw.Dispose();
 
+                        image.Mutate(x =>
+                        {
+                            if (contrast != 0)
+                            {
+                                x.Contrast(contrast);
+                            }
+                            //x.BinaryDither(DitheringType);
+                            var Palette = new ReadOnlyMemory<Color>(colors.ToArray());
 
-                        x.Dither(DitheringType, Palette);
-                    });
-                    image.SaveAsPng($"frames/frame_{i}.png");
-                    image.Dispose();
+                            x.Dither(DitheringType, Palette);
+                        });
+
+                        image.SaveAsPng($"frames/frame_{i}.png");
+                        image.Dispose();
+                    }
                 }
             }
+
             return true;
         }
 
@@ -174,7 +178,7 @@ namespace Rewrite.Encoder
             }
 
             List<Color> colors = new List<Color>();
-            switch(WhichColor)
+            switch (WhichColor)
             {
                 case 2: colors.Add(Color.Red); break;
                 case 3: colors.Add(Color.Blue); break;
@@ -188,18 +192,18 @@ namespace Rewrite.Encoder
             {
                 using (Image<Rgba32> image = (Image<Rgba32>)Image.Load(filenames[i]))
                 {
-                   image.Mutate(x =>
-                    {
-                        if (contrast != 0)
-                        {
-                            x.Contrast(contrast);
-                        }
-                        //x.BinaryDither(DitheringType);
-                        var Palette = new ReadOnlyMemory<Color>(colors.ToArray());
+                    image.Mutate(x =>
+                     {
+                         if (contrast != 0)
+                         {
+                             x.Contrast(contrast);
+                         }
+                         //x.BinaryDither(DitheringType);
+                         var Palette = new ReadOnlyMemory<Color>(colors.ToArray());
 
 
-                        x.Dither(DitheringType, Palette);
-                    });
+                         x.Dither(DitheringType, Palette);
+                     });
                     image.SaveAsPng($"frames/frame_{i}.png");
                     image.Dispose();
                 }
@@ -218,6 +222,8 @@ namespace Rewrite.Encoder
             IDither DitheringType = null;
             switch (Config.DitheringMode)
             {
+                case 0:
+                    break;
                 case 1:
                     DitheringType = KnownDitherings.Bayer8x8;
                     break;
@@ -276,7 +282,14 @@ namespace Rewrite.Encoder
                         {
                             x.Contrast(contrast);
                         }
-                        x.BinaryDither(DitheringType);
+                        if(DitheringType == null)
+                        {
+                            x.AdaptiveThreshold();
+                        } else
+                        {
+                            x.BinaryDither(DitheringType);
+                        }
+                        
                     });
                     image.SaveAsPng($"{Folder}/frame_{i}.png");
                     image.Dispose();

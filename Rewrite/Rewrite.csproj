@@ -21,14 +21,12 @@
     <PackageReference Include="NAudio" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
+    <PackageReference Include="System.Runtime.WindowsRuntime" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="PPMLib">
       <HintPath>..\..\..\..\Documents\FlipnoteNET\PPMLib\PPMLib\bin\Debug\PPMLib.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\PresentationCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 
