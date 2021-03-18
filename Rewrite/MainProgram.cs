@@ -1,23 +1,109 @@
 ﻿using FFMpegCore;
 using Newtonsoft.Json;
+using Octokit;
 using PPMLib;
 using PPMLib.Encoders;
 using Rewrite.Encoder;
 using Rewrite.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Rewrite
 {
     internal class MainProgram
     {
+        //Github Update Checks
+        private static bool Update = false;
+        private static async Task UpdateCheck()
+        {
+            //Get all releases from GitHub
+            //Source: https://octokitnet.readthedocs.io/en/latest/getting-started/
+            GitHubClient client = new GitHubClient(new ProductHeaderValue("Update-Check"));
+            IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("RinLovesYou", "Flipnote-Encoder");
+
+            //Setup the versions
+            Version latestGitHubVersion = new Version(releases[0].TagName);
+            Version localVersion = new Version("5.0.1");
+            // weed release
+
+            //Compare the Versions
+            //Source: https://stackoverflow.com/questions/7568147/compare-version-numbers-without-using-split-function
+            int versionComparison = localVersion.CompareTo(latestGitHubVersion);
+            if (versionComparison < 0)
+            {
+                Update = true;
+            }
+            else if (versionComparison > 0)
+            {
+                //not gonna happen
+            }
+            else
+            {
+                Update = false;
+            }
+        }
+
+        public static void OpenBrowser(string url)
+        {
+            try
+            {
+                Process.Start(url);
+            }
+            catch
+            {
+                // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    url = url.Replace("&", "^&");
+                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
         private static bool Running { get; set; }
         public static EncodeConfig FlipnoteConfig { get; set; }
 
         private static void Main(string[] args)
         {
+            try
+            {
+                var task = UpdateCheck();
+                task.Wait();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            if (Update)
+            {
+                Console.WriteLine("A Newer Version is available! would you like to update? y/n");
+                var answer = Console.ReadKey(true);
+                if (answer.Key == ConsoleKey.Y)
+                {
+                        OpenBrowser("http://www.github.com/RinLovesYou/Flipnote-Encoder/releases/latest");          
+                    return;
+                }
+            }
+
+
             Running = true;
 
             GlobalFFOptions.Configure(new FFOptions { BinaryFolder = "ffmpeg/bin" });
