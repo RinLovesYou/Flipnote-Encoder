@@ -65,5 +65,3 @@ I am not responsible for how this tool is used. It is against Sudomemo TOS to up
 Consider [Freenote](https://discord.gg/jHAgKe2uJs) instead :)
 
 [![forthebadge](https://forthebadge.com/images/badges/mom-made-pizza-rolls.svg)](https://forthebadge.com)
-
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K61YCS7)
