@@ -29,6 +29,8 @@ To run on any platform: run `dotnet LinuxNote.dll` in a command prompt.
 I can't guarantee that the executables work.
 In Linux: `./LinuxNote` (likely to fail right now)
 In Windows: just run the exe
+MacOS Users: Please download [ffmpeg binaries](https://ffmpeg.org) (ffmpeg and ffprobe) and place them in `ffmpeg/bin` (you have to create those folders)
+`ffmpeg/bin` should contain `ffmpeg` and `ffprobe`.
 
 # config.json
 Located inside the Root folder is a config.json. Should it not exist, a new one will be created by the program.
