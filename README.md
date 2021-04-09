@@ -23,6 +23,13 @@ uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 # Cross-Platform Information
 As I am still new to the world of Linux (and completely unfamiliar with OsX, I've built these all as cross-platform releases with embedded binaries for each system. This means you will have to install a copy of the [.NET 5 runtime](https://dotnet.microsoft.com/download) on your system.
 
+## Important!
+To run on any platform: run `dotnet LinuxNote.dll` in a command prompt.
+
+I can't guarantee that the executables work.
+In Linux: `./LinuxNote` (likely to fail right now)
+In Windows: just run the exe
+
 # config.json
 Located inside the Root folder is a config.json. Should it not exist, a new one will be created by the program.
 Here you can see all the config Items with a description of how to use them:
