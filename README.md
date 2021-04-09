@@ -27,8 +27,11 @@ As I am still new to the world of Linux (and completely unfamiliar with OsX, I'v
 To run on any platform: run `dotnet LinuxNote.dll` in a command prompt.
 
 I can't guarantee that the executables work.
+
 In Linux: `./LinuxNote` (likely to fail right now)
+
 In Windows: just run the exe
+
 MacOS Users: Please download [ffmpeg binaries](https://ffmpeg.org) (ffmpeg and ffprobe) and place them in `ffmpeg/bin` (you have to create those folders)
 `ffmpeg/bin` should contain `ffmpeg` and `ffprobe`.
 
