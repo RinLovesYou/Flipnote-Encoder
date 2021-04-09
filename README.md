@@ -1,6 +1,8 @@
 # Flipnote-Encoder
 
-A Flipnote encoder written in C#
+The Cross-Platform Flipnote Encoder and Signer written in .NET
+
+requires [.NET 5 Runtime](https://dotnet.microsoft.com/download) or newer to run!
 
 built with [PPMLib](https://github.com/miso-xyz/PPMLib)
 
@@ -17,6 +19,9 @@ uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 * (Optional) place the Flipnote Studio Private Key (good luck getting that one) called `fnkey.pem` in the same folder as the exe
 
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-energy-drinks.svg)](https://forthebadge.com)
+
+# Cross-Platform Information
+As I am still new to the world of Linux (and completely unfamiliar with OsX, I've built these all as cross-platform releases with embedded binaries for each system. This means you will have to install a copy of the [.NET 5 runtime](https://dotnet.microsoft.com/download) on your system.
 
 # config.json
 Located inside the Root folder is a config.json. Should it not exist, a new one will be created by the program.
@@ -42,6 +47,7 @@ it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back wi
 * Q: why won't it play on my dsi? A: You don't have the flipnote private key
 * Q: Can you give it to me? A: no good luck googling for it
 * Q: Can you add x? A: Yes! Maybe! suggest in [issues](https://github.com/RinLovesYou/Flipnote-Signer/issues)
+* Q: Is this open source? A: Yes! you can find the source code [here](https://dotnet.microsoft.com/download).
 
 [discord:](https://discord.gg/MBM9ZeAjna) `Rin#6969`
 
