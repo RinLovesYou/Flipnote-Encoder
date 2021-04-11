@@ -2,8 +2,6 @@
 
 The Cross-Platform Flipnote Encoder and Signer written in .NET
 
-requires [.NET 5 Runtime](https://dotnet.microsoft.com/download) or newer to run!
-
 built with [PPMLib](https://github.com/miso-xyz/PPMLib)
 
 uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
@@ -21,19 +19,11 @@ uses binaries from [ffmpeg](https://ffmpeg.org) for video manipulation.
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-energy-drinks.svg)](https://forthebadge.com)
 
 # Cross-Platform Information
-As I am still new to the world of Linux (and completely unfamiliar with OsX, I've built these all as cross-platform releases with embedded binaries for each system. This means you will have to install a copy of the [.NET 5 runtime](https://dotnet.microsoft.com/download) on your system.
+Here are the ways you can run the Flipnote Encoder:
 
-## Important!
-To run on any platform: run `dotnet LinuxNote.dll` in a command prompt.
-
-I can't guarantee that the executables work.
-
-In Linux: `./LinuxNote` (likely to fail right now)
-
-In Windows: just run the exe
-
-MacOS Users: Please download [ffmpeg binaries](https://ffmpeg.org) (ffmpeg and ffprobe) and place them in `ffmpeg/bin` (you have to create those folders)
-`ffmpeg/bin` should contain `ffmpeg` and `ffprobe`.
+* Windows: Just double click the .exe
+* Linux: `./FlipnoteEncoder` in a terminal, or double click the .sh script
+* OSX: `./FlipnoteEncoder` in a terminal I'd assume.
 
 # config.json
 Located inside the Root folder is a config.json. Should it not exist, a new one will be created by the program.
