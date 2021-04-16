@@ -55,6 +55,15 @@ it won't sign a flipnote if no `fnkey.pem` exists, you can still play it back wi
 
 [twitter:](https://twitter.com/does_rin) `@does_rin`
 
+# Information for building it yourself
+* Install the .NET 5 SDK
+* Clone the [Source](https://github.com/RinLovesYou/LinuxNote)
+* Edit the csproj file to buld for `win-x64`, `linux-x64` or `osx-x64`
+* build [PPMLib](https://github.com/RinLovesYou/PPMLib)
+* Edit the csproj file to include the path to the built PPMLib.dll
+* Open a Terminal
+* run `dotnet restore` and then `dotnet build --configuration Release`
+
 ## Special Thanks
 * [khang06](https://github.com/khang06) For his awesome encoder, being the inspiration, and his help in understanding audio.
 * [NotImplementedLife](https://github.com/NotImplementedLife) For their FlipnoteDesktop program, which helped a lot in understanding the structure of a Flipnote.
